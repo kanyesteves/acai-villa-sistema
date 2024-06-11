@@ -1,4 +1,8 @@
 import streamlit as st
+from services.connDB import ConnectDB
+
+connection = ConnectDB()
+engine = connection.engine
 
 st.set_page_config(
     layout="wide",

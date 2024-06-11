@@ -1,6 +1,8 @@
 import streamlit as st
+from services.createTableUsers import CreateTableUsers, Base
 from services.connDB import ConnectDB
 
+base = Base()
 connection = ConnectDB()
 engine = connection.engine
 
@@ -9,6 +11,7 @@ st.set_page_config(
     page_title="Esboço"
 )
 
+base.metadata.create_all(bind=engine)
 st.title("Pedido")
 
 col1, col2 = st.columns(2)

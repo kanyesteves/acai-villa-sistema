@@ -4,7 +4,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 class Base(DeclarativeBase):
     pass
 
-class CreateTableUsers(Base):
+class UsersModel(Base):
     __tablename__ = 'users'
 
     id:             Mapped[int] = mapped_column(primary_key=True)
@@ -14,4 +14,4 @@ class CreateTableUsers(Base):
     acess_gestor:   Mapped[bool] = mapped_column(Boolean, default=False)
 
     def __repr__(self):
-        return f"CreateTableUsers(f{self.id=}, {self.name=})"
+        return f"UserModel(f{self.id=}, {self.name=})"

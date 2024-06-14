@@ -1,25 +1,26 @@
 import pandas as pd
-from models.usersModel import UsersModel, Base
-from utils.connDB import ConnectDB
 from utils.libs import Libs
 from sqlalchemy import select
+from utils.connDB import ConnectDB
 from sqlalchemy.orm import Session
+from models.userModel import UserModel
 
 class UsersService():
     def __init__(self):
-        self.base = Base()
         self.conn = ConnectDB()
         self.lib = Libs()
 
+
     def getUserById(self, id):
         with Session(bind=self.conn.engine) as session:
-            select_query = select(UsersModel).filter_by(id=id)
+            select_query = select(UserModel).filter_by(id=id)
             user = session.execute(select_query).fetchall()
             return user[0][0]
-        
+
+     
     def getAllUsers(self):
         with Session(bind=self.conn.engine) as session:
-            select_query = select(UsersModel)
+            select_query = select(UserModel)
             all_users = session.execute(select_query).fetchall()
             all_users = [user[0] for user in all_users]
             users = [
@@ -27,7 +28,7 @@ class UsersService():
                     "id": user.id,
                     "name": user.name,
                     "senha": user.senha,
-                    "email": user.email,
+                    "office": user.office,
                     "acess_gestor": user.acess_gestor
                 }
                 for user in all_users
@@ -35,16 +36,17 @@ class UsersService():
             df = pd.DataFrame(users)
             return df
 
-    def createUser(self, name, senha, email, **kwargs):
+
+    def createUser(self, name, senha, office, **kwargs):
         with Session(bind=self.conn.engine) as session:
-            user = UsersModel(name=name, senha=self.lib.set_password(senha), email=email, **kwargs)
-            
+            user = UserModel(name=name, senha=self.lib.set_password(senha), office=office, **kwargs)
             session.add(user)
             session.commit()
 
+
     def updateUser(self, id, **kwargs):
         with Session(bind=self.conn.engine) as session:
-            select_query = select(UsersModel).filter_by(id=id)
+            select_query = select(UserModel).filter_by(id=id)
             users = session.execute(select_query).fetchall()
             for user in users:
                 for key, value in kwargs.items():
@@ -55,9 +57,10 @@ class UsersService():
 
             session.commit()
 
+
     def deleteUser(self, id):
         with Session(bind=self.conn.engine) as session:
-            select_query = select(UsersModel).filter_by(id=id)
+            select_query = select(UserModel).filter_by(id=id)
             users = session.execute(select_query).fetchall()
             for user in users:
                 session.delete(user[0])

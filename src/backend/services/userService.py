@@ -5,7 +5,7 @@ from utils.connDB import ConnectDB
 from sqlalchemy.orm import Session
 from models.userModel import UserModel
 
-class UsersService():
+class UserService():
     def __init__(self):
         self.conn = ConnectDB()
         self.lib = Libs()

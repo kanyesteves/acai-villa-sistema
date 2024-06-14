@@ -1,9 +1,9 @@
 import pandas as pd
-from utils.libs import Libs
 from sqlalchemy import select
-from utils.connDB import ConnectDB
 from sqlalchemy.orm import Session
-from models.foodModel import FoodModel
+from backend.utils.libs import Libs
+from backend.utils.connDB import ConnectDB
+from backend.models.foodModel import FoodModel
 
 class FoodService():
     def __init__(self):

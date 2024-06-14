@@ -1,9 +1,9 @@
 import pandas as pd
-from utils.libs import Libs
 from sqlalchemy import select
-from utils.connDB import ConnectDB
 from sqlalchemy.orm import Session
-from models.userModel import UserModel
+from backend.utils.libs import Libs
+from backend.utils.connDB import ConnectDB
+from backend.models.userModel import UserModel
 
 class UserService():
     def __init__(self):

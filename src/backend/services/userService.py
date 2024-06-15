@@ -9,6 +9,7 @@ class UserService():
     def __init__(self):
         self.conn = ConnectDB()
         self.lib = Libs()
+        self.all_users = {}
 
 
     def getUserById(self, id):
@@ -23,7 +24,7 @@ class UserService():
             select_query = select(UserModel)
             all_users = session.execute(select_query).fetchall()
             all_users = [user[0] for user in all_users]
-            users = [
+            self.all_users = [
                 {
                     "id": user.id,
                     "name": user.name,
@@ -33,7 +34,7 @@ class UserService():
                 }
                 for user in all_users
             ]
-            df = pd.DataFrame(users)
+            df = pd.DataFrame(self.all_users)
             return df
 
 

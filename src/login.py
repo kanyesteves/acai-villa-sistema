@@ -1,19 +1,3 @@
-# from backend.utils.connDB import ConnectDB
-# from backend.models.userModel import UserBase
-# from backend.models.foodModel import FoodBase
-
-# # from backend.services.userService import UserService
-
-# connect = ConnectDB()
-# user_base = UserBase()
-# food_base = FoodBase()
-
-# # Criando tabelas do banco de dados
-# user_base.metadata.create_all(bind=connect.engine)
-# food_base.metadata.create_all(bind=connect.engine)
-
-############################################################
-
 import streamlit as st
 from time import sleep
 from backend.services.userService import UserService

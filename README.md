@@ -1,6 +1,6 @@
 # Projeto Açai da Villa
 
-Esse projeto tem como objetivo apresentar os requisitos para o desenvolvimento do sistema, estruturação do código e requisitos funcionais e não funcionais.
+Esse projeto tem como objetivo automatizar a forma que os pedidos de laches são feitos de dentro do estabelecimento.
 
 ## Requisitos para o desenvolvimento do sistema
 

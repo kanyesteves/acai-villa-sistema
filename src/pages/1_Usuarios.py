@@ -1,6 +1,10 @@
 import streamlit as st
 from backend.services.userService import UserService
 
+st.set_page_config(
+    layout="wide"
+)
+
 userService = UserService()
 
 @st.experimental_dialog("Adicionar um usuário")
@@ -28,16 +32,16 @@ def main():
         st.switch_page("login.py")
 
     
-    col1, col2 = st.columns([0.1, 1])
-    if col1.button("Adicionar"):
+    col1, col2, col3 = st.columns(3)
+    if col1.button("Adicionar usuário"):
         addUser()
-    if col1.button("Atualizar"):
+    if col2.button("Atualizar usuário"):
         updateUser()
-    if col1.button("Remover"):
+    if col3.button("Remover usuário"):
         removeUser()
 
     all_users = userService.getAllUsers()
-    col2.table(all_users)
+    all_users
 
 
 

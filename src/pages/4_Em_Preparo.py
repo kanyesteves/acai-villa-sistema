@@ -5,7 +5,7 @@ def main():
     st.sidebar.subheader(f"Usuário logado: {st.session_state.user['name']}")
 
     col1, col2 = st.columns([2, 0.5])
-    col1.title("Dashboard")
+    col1.title("Em Preparo")
     if col2.button("Logout"):
         st.session_state.user = {}
         st.session_state.login = False

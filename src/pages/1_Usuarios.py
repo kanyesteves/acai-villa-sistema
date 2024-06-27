@@ -2,7 +2,8 @@ import streamlit as st
 from backend.services.userService import UserService
 
 st.set_page_config(
-    layout="wide"
+    layout="wide",
+    page_title="Usuários"
 )
 
 userService = UserService()
@@ -25,29 +26,25 @@ def main():
 
     col1, col2 = st.columns([2, 0.5])
     col1.title("Usuários")
-    st.divider()
     if col2.button("Logout"):
         st.session_state.user = {}
         st.session_state.login = False
         st.switch_page("login.py")
 
-    
-    col1, col2, col3 = st.columns(3)
-    if col1.button("Adicionar usuário"):
+    st.divider()
+
+    container = st.container(border=True)
+    col1, col2 = container.columns([0.5, 2.5])
+    if col1.button("Adicionar usuário", type="primary"):
         addUser()
-    if col2.button("Atualizar usuário"):
+    if col1.button("Atualizar usuário", type="primary"):
         updateUser()
-    if col3.button("Remover usuário"):
+    if col1.button("Remover usuário", type="primary"):
         removeUser()
 
     all_users = userService.getAllUsers()
-    all_users
-
-
-
-
-
-
+    with col2.expander("Tabela de Usuários"):
+        all_users
 
 
 

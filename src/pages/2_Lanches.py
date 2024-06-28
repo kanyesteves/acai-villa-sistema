@@ -1,12 +1,12 @@
 import streamlit as st
-from backend.services.userService import UserService
+from backend.services.foodService import FoodService
 
 st.set_page_config(
     layout="wide",
     page_title="Lanches"
 )
 
-userService = UserService()
+foodService = FoodService()
 
 @st.experimental_dialog("Adicionar um lanche")
 def addFood():
@@ -22,6 +22,7 @@ def removeFood():
 
 
 def main():
+    all_foods = foodService.getAllFoods()
     st.sidebar.subheader(f"Usuário logado: {st.session_state.user['name']}")
 
     col1, col2 = st.columns([2, 0.5])
@@ -41,10 +42,11 @@ def main():
         updateFood()
     if col1.button("Remover lanche", type="primary"):
         removeFood()
+    if col1.button("Atualizar tabela", type="primary"):
+        all_foods = foodService.getAllFoods()
 
-    all_users = userService.getAllUsers()
     with col2.expander("Tabela de Lanches"):
-        all_users
+        all_foods
 
 
 if not st.session_state.get("login"):

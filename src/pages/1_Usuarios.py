@@ -8,9 +8,15 @@ st.set_page_config(
 
 userService = UserService()
 
-@st.experimental_dialog("Adicionar um usuário")
+@st.experimental_dialog("Adicionar um Usuário")
 def addUser():
-    st.write("cadastrar")
+    with st.form("adicionar"):
+        name = st.text_input("Nome")
+        senha = st.text_input("Senha", type="password")
+        office = st.text_input("Cargo")
+        if st.form_submit_button("Adicionar"):
+            userService.createUser(name=name, senha=senha, office=office)
+            st.success("Adicionado com sucesso !")
 
 @st.experimental_dialog("Atualizar um usuário")
 def updateUser():
@@ -22,6 +28,7 @@ def removeUser():
 
 
 def main():
+    all_users = userService.getAllUsers()
     st.sidebar.subheader(f"Usuário logado: {st.session_state.user['name']}")
 
     col1, col2 = st.columns([2, 0.5])
@@ -41,8 +48,9 @@ def main():
         updateUser()
     if col1.button("Remover usuário", type="primary"):
         removeUser()
+    if col1.button("Atualizar tabela", type="primary"):
+        all_users = userService.getAllUsers()
 
-    all_users = userService.getAllUsers()
     with col2.expander("Tabela de Usuários"):
         all_users
 

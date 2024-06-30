@@ -31,7 +31,7 @@ def login():
                 sleep(1)
                 st.rerun()
             else:
-                st.error(f"Senha do {user["name"]} incorreta")
+                st.error(f"Senha do {user['name']} incorreta")
 
 def main():
     if not 'login' in st.session_state:

@@ -40,7 +40,7 @@ def main():
     if not st.session_state.get("login"):
         login()
     else:
-        st.switch_page("pages/3_Pedidos.py")
+        st.switch_page("pages/1_Usuarios.py")
 
 
 if __name__ == '__main__':

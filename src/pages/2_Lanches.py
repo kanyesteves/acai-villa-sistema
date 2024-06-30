@@ -10,15 +10,35 @@ foodService = FoodService()
 
 @st.experimental_dialog("Adicionar um lanche")
 def addFood():
-    st.write("cadastrar")
+    with st.form("Adicionar"):
+        name_food = st.text_input("Nome do lanche")
+        type_food = st.text_input("Tipo do lanche")
+        description = st.text_input("Descrição")
+        if st.form_submit_button("Adicionar"):
+            foodService.createFood(name=name_food, food_type=type_food, description=description)
+            st.success("Adicionado com sucesso !")
+            st.switch_page("pages/2_Lanches.py")
 
 @st.experimental_dialog("Atualizar um lanche")
 def updateFood():
-    st.write("atualizar")
+    with st.form("Atualizar"):
+        id = st.text_input("ID")
+        name_food = st.text_input("Nome do lanche")
+        type_food = st.text_input("Tipo do lanche")
+        description = st.text_input("Descrição")
+        if st.form_submit_button("Atualizara"):
+            foodService.updateFood(id, name=name_food, food_type=type_food, description=description)
+            st.success("Adicionado com sucesso !")
+            st.switch_page("pages/2_Lanches.py")
 
 @st.experimental_dialog("Remover um lanche")
 def removeFood():
-    st.write("remover")
+    with st.form("Remover"):
+        id = st.text_input("ID")
+        if st.form_submit_button("Remover"):
+            foodService.deleteFood(id)
+            st.success("Removido com sucesso !")
+            st.switch_page("pages/2_Lanches.py")
 
 
 def main():
@@ -34,18 +54,18 @@ def main():
 
     st.divider()
 
-    container = st.container(border=True)
-    col1, col2 = container.columns([0.5, 2.5])
-    if col1.button("Adicionar lanche", type="primary"):
+    col1, col2, col3 = st.columns([1, 1, 1])
+    if col1.button("Adicionar", type="primary"):
         addFood()
-    if col1.button("Atualizar lanche", type="primary"):
+        all_foods = foodService.getAllFoods()
+    if col2.button("Atualizar", type="primary"):
         updateFood()
-    if col1.button("Remover lanche", type="primary"):
+        all_foods = foodService.getAllFoods()
+    if col3.button("Remover", type="primary"):
         removeFood()
-    if col1.button("Atualizar tabela", type="primary"):
         all_foods = foodService.getAllFoods()
 
-    with col2.expander("Tabela de Lanches"):
+    with st.expander("Tabela de Lanches"):
         all_foods
 
 

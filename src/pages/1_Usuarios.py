@@ -10,21 +10,35 @@ userService = UserService()
 
 @st.experimental_dialog("Adicionar um Usuário")
 def addUser():
-    with st.form("adicionar"):
+    with st.form("Adicionar"):
         name = st.text_input("Nome")
         senha = st.text_input("Senha", type="password")
         office = st.text_input("Cargo")
         if st.form_submit_button("Adicionar"):
             userService.createUser(name=name, senha=senha, office=office)
             st.success("Adicionado com sucesso !")
+            st.switch_page("pages/1_Usuarios.py")
 
 @st.experimental_dialog("Atualizar um usuário")
 def updateUser():
-    st.write("atualizar")
+    with st.form("Atualizar"):
+        id = st.text_input("ID")
+        name = st.text_input("Nome")
+        senha = st.text_input("Senha", type="password")
+        office = st.text_input("Cargo")
+        if st.form_submit_button("Atualizar"):
+            userService.updateUser(id, name=name, senha=senha, office=office)
+            st.success("Atualizado com sucesso !")
+            st.switch_page("pages/1_Usuarios.py")
 
 @st.experimental_dialog("Remover um usuário")
 def removeUser():
-    st.write("remover")
+    with st.form("Remover"):
+        id = st.text_input("ID")
+        if st.form_submit_button("Remover"):
+            userService.deleteUser(id)
+            st.success("Removido com sucesso !")
+            st.switch_page("pages/1_Usuarios.py")
 
 
 def main():
@@ -40,19 +54,20 @@ def main():
 
     st.divider()
 
-    container = st.container(border=True)
-    col1, col2 = container.columns([0.5, 2.5])
-    if col1.button("Adicionar usuário", type="primary"):
+    col1, col2, col3 = st.columns([1, 1, 1])    
+    if col1.button("Adicionar", type="primary"):
         addUser()
-    if col1.button("Atualizar usuário", type="primary"):
+        all_users = userService.getAllUsers()
+    if col2.button("Atualizar", type="primary"):
         updateUser()
-    if col1.button("Remover usuário", type="primary"):
+        all_users = userService.getAllUsers()
+    if col3.button("Remover", type="primary"):
         removeUser()
-    if col1.button("Atualizar tabela", type="primary"):
         all_users = userService.getAllUsers()
 
-    with col2.expander("Tabela de Usuários"):
-        all_users
+    with st.expander("Tabela de Usuários"):
+        all_users = all_users.drop("senha", axis='columns')
+        st.table(all_users)
 
 
 
